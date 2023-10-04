@@ -1,4 +1,4 @@
-package com.example.t1_testcase;
+package t1_testcase;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
