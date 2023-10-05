@@ -15,7 +15,11 @@ public class MainService {
     public String solve(InputText text) {
         String lowerString = text.getContent().toLowerCase();
         char[] charSequence = lowerString.toCharArray();
-        Pattern pattern = Pattern.compile(PatternConstants.LATIN);
+        Map<Character, Integer> countedSymbols = countFitSymbols(charSequence, Pattern.compile(PatternConstants.LATIN));
+        return buildResponse(countedSymbols);
+    }
+
+    private Map<Character, Integer> countFitSymbols(char[] charSequence, Pattern pattern) {
         Map<Character, Integer> result = new TreeMap<>();
         for (char c : charSequence) {
             Matcher matcher = pattern.matcher("" + c);
@@ -28,8 +32,12 @@ public class MainService {
                 }
             }
         }
+        return result;
+    }
+
+    private String buildResponse(Map<Character, Integer> symbols){
         StringBuilder sb = new StringBuilder();
-        result.entrySet().stream()
+        symbols.entrySet().stream()
                 .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
                 .forEach(a -> sb.append("\"").append(a.getKey()).append("\": ").append(a.getValue()).append(", "));
         if (sb.length() > 7) {
@@ -38,6 +46,5 @@ public class MainService {
         } else {
             return "В переданной строке отсутствуют символы латинского алфавита!";
         }
-
     }
 }
