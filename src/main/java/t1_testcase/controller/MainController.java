@@ -1,11 +1,12 @@
 package t1_testcase.controller;
 
-import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import t1_testcase.dto.InputText;
 import t1_testcase.service.MainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
