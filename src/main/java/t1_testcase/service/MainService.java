@@ -1,5 +1,6 @@
 package t1_testcase.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import t1_testcase.dto.InputText;
 import t1_testcase.util.PatternConstants;
@@ -10,11 +11,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
+@Slf4j
 public class MainService {
 
     private static final String NOTICE_STRING = "В переданной строке отсутствуют символы латинского алфавита!";
 
     public String solve(InputText text) {
+        log.info("Поступил запрос на подсчет символов в строке : " + text.getContent());
         String lowerString = text.getContent().toLowerCase();
         char[] charSequence = lowerString.toCharArray();
         Map<Character, Integer> countedSymbols = countFitSymbols(charSequence, Pattern.compile(PatternConstants.LATIN));
