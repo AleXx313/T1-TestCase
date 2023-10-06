@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
 @Service
 public class MainService {
 
+    private static final String NOTICE_STRING = "В переданной строке отсутствуют символы латинского алфавита!";
+
     public String solve(InputText text) {
         String lowerString = text.getContent().toLowerCase();
         char[] charSequence = lowerString.toCharArray();
@@ -35,16 +37,16 @@ public class MainService {
         return result;
     }
 
-    private String buildResponse(Map<Character, Integer> symbols){
+    private String buildResponse(Map<Character, Integer> symbols) {
         StringBuilder sb = new StringBuilder();
         symbols.entrySet().stream()
                 .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
                 .forEach(a -> sb.append("\"").append(a.getKey()).append("\": ").append(a.getValue()).append(", "));
         if (sb.length() > 7) {
             sb.delete(sb.length() - 2, sb.length() - 1);
-            return sb.toString();
+            return sb.toString().trim();
         } else {
-            return "В переданной строке отсутствуют символы латинского алфавита!";
+            return NOTICE_STRING;
         }
     }
 }

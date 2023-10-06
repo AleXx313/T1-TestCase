@@ -1,24 +1,23 @@
 package t1_testcase.exception;
 
-import jakarta.validation.ConstraintViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ErrorHandler {
 
-    @ExceptionHandler({ConstraintViolationException.class})
-    public ErrorResponse handleConstraintValidationException(final ConstraintViolationException e){
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
         return new ErrorResponse("Входящие значения не соответствуют заданному формату!", e.getMessage());
     }
 
-    @ExceptionHandler({IllegalArgumentException.class})
-    public ErrorResponse handleIllegalArgumentException(final IllegalArgumentException e){
-        return new ErrorResponse("Входящие значения недопустимы!", e.getMessage());
-    }
-
     @ExceptionHandler({Throwable.class})
-    public ErrorResponse handleNotSpecifiedException(final Throwable e){
-        return new ErrorResponse("Входящие значения недопустимы!", e.getMessage());
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleNotSpecifiedException(final Throwable e) {
+        return new ErrorResponse("Непредвиденная ошибка!", e.getMessage());
     }
 }
